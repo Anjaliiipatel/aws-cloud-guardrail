@@ -14,7 +14,6 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 st.title("🛡️ CloudSentinel: Security Guardrail")
-st.caption("Capital One Internship Project | Real-time AWS Infrastructure Audit")
 
 # 2. Logic to fetch AWS data
 def get_s3_data():
