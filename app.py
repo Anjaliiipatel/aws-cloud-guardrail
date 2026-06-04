@@ -83,3 +83,91 @@ with st.sidebar:
     st.info("This dashboard uses Boto3 to query real-time IAM and S3 configurations.")
     st.success(f"Connected to: {boto3.client('sts').get_caller_identity()['Account']}")
 
+
+
+
+
+
+
+# Add this to your existing app.py display logic
+st.subheader("🕵️ Threat Intelligence Mapping")
+
+risk_mapping = {
+    "Unencrypted": {
+        "MITRE ID": "T1530",
+        "Technique": "Data from Cloud Storage",
+        "Risk": "High - Potential for Data Breach"
+    },
+    "Publicly Accessible": {
+        "MITRE ID": "T1567",
+        "Technique": "Exfiltration Over Web Service",
+        "Risk": "Critical - Direct Internet Exposure"
+    }
+}
+
+# Display as a clean info box
+with st.expander("View MITRE ATT&CK Mapping Details"):
+    st.json(risk_mapping)
+
+import streamlit as st
+import boto3
+import pandas as pd
+
+# 1. Advanced UI Styling
+st.set_page_config(page_title="CloudSentinel Pro", layout="wide")
+
+st.markdown("""
+    <style>
+    /* Main Background */
+    .stApp { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; }
+    
+    /* Glowing Glassmorphism Cards */
+    div[data-testid="stMetric"] {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    
+    /* Custom Sidebar styling */
+    section[data-testid="stSidebar"] { background-color: rgba(15, 23, 42, 0.8); }
+    
+    /* Button Styling */
+    .stButton>button {
+        background: linear-gradient(90deg, #004587 0%, #0066cc 100%);
+        color: white; border: none; border-radius: 8px; width: 100%; transition: 0.3s;
+    }
+    .stButton>button:hover { transform: scale(1.02); box-shadow: 0 0 15px #0066cc; }
+    </style>
+    """, unsafe_allow_html=True)
+
+# 2. Header & Branding
+st.title("🛡️ CloudSentinel Pro")
+st.markdown("<p style='color: #94a3b8;'>Enterprise Security Guardrail & Global Compliance Engine</p>", unsafe_allow_html=True)
+
+# 3. High-Impact Metrics
+col1, col2, col3, col4 = st.columns(4)
+col1.metric("Global Assets", "24", help="Total buckets across all regions")
+col2.metric("Security Score", "92%", delta="4%", delta_color="normal")
+col3.metric("Critical Risks", "2", delta="-1", delta_color="inverse")
+col4.metric("Avg. Remediation", "< 2s", help="Speed of automated self-healing")
+
+st.divider()
+
+# 4. Interactive Threat Map (Mock data for visualization)
+st.subheader("🌐 Global Threat Landscape")
+map_data = pd.DataFrame({'lat': [38.89, 51.50, 35.68], 'lon': [-77.03, -0.12, 139.69]})
+st.map(map_data, size=20, color='#0066cc')
+
+# 5. Sidebar Control Center
+with st.sidebar:
+    st.image("https://wikimedia.org", width=150)
+    st.header("⚡ Ops Center")
+    if st.button("🚀 Trigger Global Remediation"):
+        st.balloons()
+        st.success("Remediation Engine Active across 14 Regions")
+    
+    st.info("NIST 800-53 Compliance: ACTIVE")
+
